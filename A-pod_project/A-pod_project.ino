@@ -1,13 +1,10 @@
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(9,8);
- int i = 0;
-
 #include <Encoder.h>
 #include <MINDSi.h>
 
-#include <SoftwareSerial.h>
 SoftwareSerial mySerial(9,8);
  int i = 0;
+
  
 
 void setup() {
@@ -24,18 +21,33 @@ mySerial.begin(38400);
 
 
   
-
-mySerial.println("#0 P1000 T500 #1 P1600 T500 #2 P1400 T500"); //right back
-mySerial.println("#4 P1500 T500 #5 P1600 T500 #6 P1500 T500"); //right mid
-mySerial.println("#8 P1700 T500 #9 P1600 T500 #10 P1500 T500"); //right front
-mySerial.println("#16 P1700 T500 #17 P1400 T500 #18 P1600 T500"); //left back
-mySerial.println("#20 P1500 T500 #21 P1400 T500 #22 P1700 T500"); //left mid
-mySerial.println("#24 P1000 T500 #25 P1400 T500 #26 P1600 T500"); //left front
-mySerial.println(" #30 P1500 T500 #31 P1800 T500"); //tail
-delay(1000);
+//right side. Down is up.
+mySerial.println("#0 P1000 T600 #1 P1000 T600 #2 P1000 T600"); //right back
+mySerial.println("#4 P1500 T600 #5 P1100 T600 #6 P1100 T600"); //right mid
+mySerial.println("#8 P1700 T600 #9 P1000 T600 #10 P1000 T600"); //right front
+mySerial.println("#16 P1700 T600 #17 P2000 T600 #18 P2100 T600"); //left back
+mySerial.println("#20 P1500 T600 #21 P1900 T600 #22 P2100 T600"); //left mid
+mySerial.println("#24 P1000 T600 #25 P2000 T600 #26 P2100 T600"); //left front
+mySerial.println(" #30 P1500 T600 #31 P1800 T600"); //tail
+delay(2500);
 }
 
 void loop() {
+
+
+//mySerial.println("#0 P1000 T600 #1 P1000 T600 #2 P1000 T600"); //right back
+//mySerial.println("#4 P1500 T600 #5 P800 T600 #6 P1100 T600"); //right mid
+//mySerial.println("#8 P1700 T600 #9 P1000 T600 #10 P1000 T600"); //right front
+//mySerial.println("#16 P1700 T600 #17 P2300 T600 #18 P2100 T600"); //left back
+//mySerial.println("#20 P1500 T600 #21 P1900 T600 #22 P2100 T600"); //left mid
+//mySerial.println("#24 P1000 T600 #25 P2300 T600 #26 P2100 T600"); //left front
+//delay(1000);
+//mySerial.println("#0 P800 T600 #1 P1000 T600 #2 P1000 T600"); //right back
+//mySerial.println("#4 P1500 T600 #5 P1100 T600 #6 P1100 T600"); //right mid
+//mySerial.println("#8 P1500 T600 #9 P1000 T600 #10 P1000 T600"); //right front
+//mySerial.println("#16 P1700 T600 #17 P2000 T600 #18 P2100 T600"); //left back
+//mySerial.println("#20 P1700 T600 #21 P1900 T600 #22 P2100 T600"); //left mid
+//mySerial.println("#24 P1000 T600 #25 P2000 T600 #26 P2100 T600"); //left front
 
 if(getPing(7)>1700){
    // mySerial.println("#28 P800 #29 P2200 T500");
@@ -95,7 +107,7 @@ digitalWrite(4,HIGH);
 digitalWrite(3,HIGH);
 
 
-    mySerial.println("#28 P2400 #29 P600 T500");
+    mySerial.println("#28 P2400 #29 P600 T500");// claw
   mySerial.println(" #30 P1000 T500 #31 P1800 T500"); //tail
   delay(100);
       mySerial.println(" #30 P2000 T500 #31 P1800 T500"); //tail
@@ -109,14 +121,7 @@ digitalWrite(3,HIGH);
 else{
       mySerial.println("#28 P800 #29 P2200 T500");
 }
-//
-//mySerial.println("#0 P1000 T500 #1 P1600 T500 #2 P1400 T500"); //right back
-//mySerial.println("#4 P1500 T500 #5 P1600 T500 #6 P1500 T500"); //right mid
-//mySerial.println("#8 P1700 T500 #9 P1600 T500 #10 P1500 T500"); //right front
-//mySerial.println("#16 P1700 T500 #17 P1400 T500 #18 P1600 T500"); //left back
-//mySerial.println("#20 P1500 T500 #21 P1400 T500 #22 P1700 T500"); //left mid
-//mySerial.println("#24 P1000 T500 #25 P1400 T500 #26 P1600 T500"); //left front
-//mySerial.println(" #30 P1500 T500 #31 P1800 T500"); //tail
+
  
 Serial.println(getPing(7));
   
