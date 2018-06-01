@@ -303,7 +303,7 @@ void setup(){
     g_fDebugOutput = false;
 #ifdef DBGSerial    
     DBGSerial.begin(57600);
-//DBGSerial.begin(38400);
+   // DBGSerial.begin(38400);
 #endif
     // Init our ServoDriver
     g_ServoDriver.Init();
