@@ -4,11 +4,9 @@
 //Description: Phoenix software
 //Software version: V2.0
 //Date: 29-10-2009
-//Created By: Jeroen Janssen [aka Xan]
+//Programmer: Jeroen Janssen [aka Xan]
 //         Kurt Eckhardt(KurtE) converted to C and Arduino
-//Modified By:  Nathan Boyd
-//              Erin Kubo
-//              Jose Morales
+//
 // This version of the Phoenix code was ported over to the Arduino Environement
 // and is specifically configured for the Lynxmotion BotBoarduino 
 //
@@ -19,7 +17,7 @@
 //
 //KNOWN BUGS:
 //    - Lots ;)
-//    - What a pain
+//
 //=============================================================================
 // Header Files
 //=============================================================================

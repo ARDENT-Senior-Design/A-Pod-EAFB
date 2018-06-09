@@ -316,8 +316,13 @@ void InputController::ControlInput(void)
                     g_InControlState.TravelLength.x = g_InControlState.TravelLength.x/2;
                     g_InControlState.TravelLength.z = g_InControlState.TravelLength.z/2;
                 }
-
-                g_InControlState.TravelLength.y = -(ps2x.Analog(PSS_RX) - 128)/4; //Right Stick Left/Right 
+                if(ps2x.Analog(PSS_RX)-128>0){
+                g_InControlState.TravelLength.y = ps2x.Analog(PSS_RX) < 200 ? -(ps2x.Analog(PSS_RX) - 128)/4 : -(200 - 128)/4  ; //Right Stick Left/Right 
+                }
+                else{
+                  g_InControlState.TravelLength.y = ps2x.Analog(PSS_RX) > 50 ? -(ps2x.Analog(PSS_RX) - 128)/4 : -(50 - 128)/4  ;
+                }
+                
             }
 
             //[Translate functions]
