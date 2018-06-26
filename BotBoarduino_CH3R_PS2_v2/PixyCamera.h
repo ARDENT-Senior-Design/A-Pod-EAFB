@@ -1,19 +1,6 @@
-#include <Pixy.h>
-#include <SPI.h>  
-
-// This is the main Pixy object 
-Pixy pixy;
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.print("Starting...\n");
-
-  pixy.init();
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-static int i = 0;
+Pixy UpdateCamera(Pixy pixy)
+{
+  static int i = 0;
   int j;
   uint16_t blocks;
   char buf[32]; 
@@ -33,13 +20,13 @@ static int i = 0;
     {
       for (j=0; j<blocks; j++)
       {
-        //if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 300)
-        //{
+        if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 300)
+        {
           sprintf(buf, "Detected %d:\n", blocks);
           Serial.print(buf);
           largestArea=pixy.blocks[j].width*pixy.blocks[j].height;
           largestAreaPos = j;
-       // }
+        }
       }
       if(largestArea!=0)
       {
@@ -50,4 +37,6 @@ static int i = 0;
       }
     }
   }  
+  return pixy;  //returns the update pixy camera image pixel
 }
+

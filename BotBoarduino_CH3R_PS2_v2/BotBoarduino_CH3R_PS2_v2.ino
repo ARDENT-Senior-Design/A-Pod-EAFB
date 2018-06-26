@@ -30,6 +30,9 @@
 #include <pins_arduino.h>
 #include <SoftwareSerial.h>        
 #include "Hex_globals.h"
+#include <Pixy.h>
+#include <SPI.h>  
+#include "PixyCamera.h"
 #define BalanceDivFactor 6    //;Other values than 6 can be used, testing...CAUTION!! At your own risk ;)
 
 //--------------------------------------------------------------------
@@ -270,7 +273,7 @@ long            GaitRotY[6];         //Array containing Relative Y rotation corr
 boolean         fWalking;            //  True if the robot are walking
 boolean         fContinueWalking;    // should we continue to walk?
 
-
+Pixy pixy;
 
 //=============================================================================
 // Function prototypes
@@ -291,6 +294,7 @@ extern void LegIK (short IKFeetPosX, short IKFeetPosY, short IKFeetPosZ, byte Le
 extern void Gait (byte GaitCurrentLegNr);
 extern short GetATan2 (short AtanX, short AtanY);
 
+extern Pixy UpdateCamera(Pixy pixy);
 
 //--------------------------------------------------------------------------
 // SETUP: the main arduino setup function.
@@ -379,7 +383,7 @@ void loop(void)
     CheckVoltage();        // check our voltages...
     if (!g_fLowVoltageShutdown)
         g_InputController.ControlInput();
-    
+    pixy.init();
     WriteOutputs();        // Write Outputs
     
 
