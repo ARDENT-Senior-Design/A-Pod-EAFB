@@ -46,7 +46,6 @@
 
 // Which type of control(s) do you want to compile in
 #define DBGSerial         Serial1
-
 #if defined(UBRR1H)
 #define SSCSerial         Serial1
 #else

@@ -1,5 +1,6 @@
 #include <PS2X_lib.h>
 
+
 //Project Lynxmotion Phoenix
 //Description: Phoenix software
 //Software version: V2.0
@@ -25,6 +26,7 @@
 #include <Arduino.h>
 #else
 #endif
+#include <NewPing.h>
 #include <PS2X_lib.h>
 #include <pins_arduino.h>
 #include <SoftwareSerial.h>        
@@ -295,6 +297,12 @@ extern short GetATan2 (short AtanX, short AtanY);
 
 extern PixyI2C UpdateCamera(PixyI2C pixy);
 
+//=============================================================================
+//Claw Sensor
+//=============================================================================
+
+//NewPing sonar(8,7,200);
+
 //--------------------------------------------------------------------------
 // SETUP: the main arduino setup function.
 //--------------------------------------------------------------------------
@@ -367,6 +375,8 @@ void setup(){
     g_fLowVoltageShutdown = false;
     
     pixy.init();
+    
+    //Serial.begin(9600);
 }
 
     
@@ -549,6 +559,20 @@ void loop(void)
         g_InControlState.fPrev_HexOn = 1;
     else
         g_InControlState.fPrev_HexOn = 0;
+        
+//=============================================================================
+//Claw Sensor
+//=============================================================================
+
+//Serial.print ("Distance: ");
+//  Serial.println(sonar.ping_cm());
+//  
+// if (sonar.ping_cm()<10) {
+//  DBGSerial.println("#28 P1500 #29 P1500 T2500");
+//  } else if (sonar.ping_cm() >10) {
+//    DBGSerial.println("#28 P600 #29 P600 T2500");
+//}
+        
 }
 
 
