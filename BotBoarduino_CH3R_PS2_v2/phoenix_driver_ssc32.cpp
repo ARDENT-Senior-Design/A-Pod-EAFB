@@ -23,6 +23,7 @@
 const byte cCoxaPin[] PROGMEM = {cRRCoxaPin,  cRMCoxaPin,  cRFCoxaPin,  cLRCoxaPin,  cLMCoxaPin,  cLFCoxaPin};
 const byte cFemurPin[] PROGMEM = {cRRFemurPin, cRMFemurPin, cRFFemurPin, cLRFemurPin, cLMFemurPin, cLFFemurPin};
 const byte cTibiaPin[] PROGMEM = {cRRTibiaPin, cRMTibiaPin, cRFTibiaPin, cLRTibiaPin, cLMTibiaPin, cLFTibiaPin};
+const byte neckPin[] PROGMEM = {cNeckPin};
 #ifdef c4DOF
 const byte cTarsPin[] PROGMEM = {cRRTarsPin, cRMTarsPin, cRFTarsPin, cLRTarsPin, cLMTarsPin, cLFTarsPin};
 #endif
@@ -230,6 +231,19 @@ void ServoDriver::OutputServoInfoForLeg(byte LegIndex, short sCoxaAngle1, short 
     SSCSerial.print(pgm_read_byte(&cTibiaPin[LegIndex]), DEC);
     SSCSerial.print("P");
     SSCSerial.print(wTibiaSSCV, DEC);
+    /////////////////////////////////////////neck and head
+    //14 is the pitch of the head
+    //12 yaw of head
+    //13 is roll
+    
+    SSCSerial.println("#13 P1500 T600"); //tail
+    SSCSerial.println("#14 P1500 T600");
+//   SSCSerial.print("#");
+//    SSCSerial.print(pgm_read_byte(&cTibiaPin[LegIndex]), DEC);
+//    SSCSerial.print("P");
+//    SSCSerial.print(wTibiaSSCV, DEC);
+    /////////////////////////////////////////tail
+    SSCSerial.println("#31 P1800 T600"); //tail
 #ifdef c4DOF
     if ((byte)pgm_read_byte(&cTarsLength[LegIndex])) {
         SSCSerial.print("#");

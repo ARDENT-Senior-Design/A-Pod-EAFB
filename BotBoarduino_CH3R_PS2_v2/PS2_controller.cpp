@@ -176,8 +176,9 @@ void InputController::ControlInput(void)
              //Translate mode
             if (ps2x.ButtonPressed(PSB_L1)) {// L1 Button Test
                 MSound(SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
-                if (ControlMode != TRANSLATEMODE )
+                if (ControlMode != TRANSLATEMODE ){
                     ControlMode = TRANSLATEMODE;
+                    Serial.println("Control Mode");}
                 else {
                     if (g_InControlState.SelectedLeg==255) 
                         ControlMode = WALKMODE;
@@ -189,8 +190,9 @@ void InputController::ControlInput(void)
             //Rotate mode
             if (ps2x.ButtonPressed(PSB_L2)) {    // L2 Button Test
                 MSound(SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
-                if (ControlMode != ROTATEMODE)
+                if (ControlMode != ROTATEMODE){
                     ControlMode = ROTATEMODE;
+                    Serial.println("Rotate Mode");}
                 else {
                     if (g_InControlState.SelectedLeg == 255) 
                         ControlMode = WALKMODE;
@@ -206,6 +208,7 @@ void InputController::ControlInput(void)
                     //Sound SOUND_PIN,[50\4000]
                     if (ControlMode != SINGLELEGMODE) {
                         ControlMode = SINGLELEGMODE;
+                        Serial.println("Single Mode");
                             if (g_InControlState.SelectedLeg == 255)  //Select leg if none is selected
                                 g_InControlState.SelectedLeg=cRF; //Startleg
                     } else {
@@ -221,6 +224,7 @@ void InputController::ControlInput(void)
                 MSound(SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
                 if (ControlMode != GPPLAYERMODE) {
                     ControlMode = GPPLAYERMODE;
+                    Serial.println("GP Player Mode");
                     GPSeq=0;
                 } else
                     ControlMode = WALKMODE;
@@ -231,6 +235,7 @@ void InputController::ControlInput(void)
             //Switch Balance mode on/off 
             if (ps2x.ButtonPressed(PSB_SQUARE)) { // Square Button Test
                 g_InControlState.BalanceMode = !g_InControlState.BalanceMode;
+                Serial.println("Balance Mode");
                 if (g_InControlState.BalanceMode) {
                     MSound(SOUND_PIN, 1, 250, 1500);  //sound SOUND_PIN, [250\3000]
                 } else {
@@ -240,8 +245,9 @@ void InputController::ControlInput(void)
 
             //Stand up, sit down  
             if (ps2x.ButtonPressed(PSB_TRIANGLE)) { // Triangle - Button Test
-                if (g_BodyYOffset>0) 
+                if (g_BodyYOffset>0) {
                     g_BodyYOffset = 0;
+                    Serial.println("Body Offset Mode");}
                 else
                     g_BodyYOffset = 35;
             }
@@ -286,6 +292,7 @@ void InputController::ControlInput(void)
                 //Double leg lift height
                 if (ps2x.ButtonPressed(PSB_R1)) { // R1 Button Test
                     MSound(SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
+                    Serial.println("Double Height");
                     DoubleHeightOn = !DoubleHeightOn;
                     if (DoubleHeightOn)
                         g_InControlState.LegLiftHeight = 80;
@@ -297,6 +304,7 @@ void InputController::ControlInput(void)
                 if (ps2x.ButtonPressed(PSB_R2)) {// R2 Button Test
                     MSound (SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
                     DoubleTravelOn = !DoubleTravelOn;
+                    Serial.println("Double travel On");
                 }
   
                 // Switch between Walk method 1 && Walk method 2

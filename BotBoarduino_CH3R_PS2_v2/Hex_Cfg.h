@@ -130,7 +130,11 @@
 #define cLFTibiaPin     26   //Front Left leg Knee
 #define cLFTarsPin      27   // Tar
 
+#define cNeckPin         14  //Neck for vertical head movement
 
+
+#define cLeftJaw         28  //Left Jaw 
+#define cRightJaw        29  //Right Jaw
 //--------------------------------------------------------------------
 //[MIN/MAX ANGLES]
 #define cRRCoxaMin1     -650      //Mechanical limits of the Right Rear Leg

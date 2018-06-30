@@ -6,6 +6,8 @@
 #define RCS_MAX_POS     1000L
 #define RCS_CENTER_POS  ((RCS_MAX_POS-RCS_MIN_POS)/2)
 
+int32_t panError, tiltError;
+
 PixyI2C UpdateCamera(PixyI2C pixy)
 {
   static int i = 0;
@@ -14,6 +16,7 @@ PixyI2C UpdateCamera(PixyI2C pixy)
   char buf[32]; 
   int largestArea =0;
   int largestAreaPos=0;
+  
   // grab blocks!
   blocks = pixy.getBlocks();
   Serial.println(pixy.getBlocks());
@@ -25,11 +28,11 @@ PixyI2C UpdateCamera(PixyI2C pixy)
     Serial.println("This running");
     // do this (print) every 50 frames because printing every
     // frame would bog down the Arduino
-    if (i%50==0)
+    if (i%5==0)
     {
       for (j=0; j<blocks; j++)
       {
-        if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 300)
+        if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 150)
         {
           Serial.println("This is running");
           sprintf(buf, "Detected %d:\n", blocks);
@@ -45,7 +48,16 @@ PixyI2C UpdateCamera(PixyI2C pixy)
         Serial.print(buf); 
         pixy.blocks[largestAreaPos].print();
         Serial.println(largestArea);
-        
+        panError = X_CENTER-pixy.blocks[largestAreaPos].x;
+        tiltError = pixy.blocks[largestAreaPos].y-Y_CENTER;
+        Serial.print("Horizontal Error: ");
+        Serial.println(panError);
+        Serial.print("Vertical Error: ");
+        Serial.println(tiltError);
+      }
+      else
+      {
+        largestArea = 0;
       }
     }
   }  

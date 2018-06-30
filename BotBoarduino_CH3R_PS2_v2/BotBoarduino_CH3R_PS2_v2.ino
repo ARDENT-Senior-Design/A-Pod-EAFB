@@ -396,7 +396,7 @@ void loop(void)
         g_InputController.ControlInput();
     WriteOutputs();        // Write Outputs
 //    delay(10);
-    //pixy=UpdateCamera(pixy);
+    pixy=UpdateCamera(pixy);
 //    delay(10);
 #ifdef OPT_GPPLAYER
     //GP Player
