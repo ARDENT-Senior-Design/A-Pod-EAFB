@@ -1,8 +1,9 @@
-#include <Pixy.h>
-#include <SPI.h>  
+
+#include <Wire.h>
+#include <PixyI2C.h>
 
 // This is the main Pixy object 
-Pixy pixy;
+PixyI2C pixy;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -33,13 +34,13 @@ static int i = 0;
     {
       for (j=0; j<blocks; j++)
       {
-        //if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 300)
-        //{
+        if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 300)
+        {
           sprintf(buf, "Detected %d:\n", blocks);
           Serial.print(buf);
           largestArea=pixy.blocks[j].width*pixy.blocks[j].height;
           largestAreaPos = j;
-       // }
+        }
       }
       if(largestArea!=0)
       {

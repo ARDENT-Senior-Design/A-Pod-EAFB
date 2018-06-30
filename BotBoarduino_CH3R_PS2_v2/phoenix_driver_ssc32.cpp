@@ -71,7 +71,6 @@ void ServoDriver::Init(void) {
 #endif
     SSCSerial.print("ver\r");
     cbRead = SSCRead((byte*)abVer, sizeof(abVer), 10000, 13);
-    
 #ifdef DBGSerial
     DBGSerial.write("Check GP Enable: ");
     if (cbRead > 0) {

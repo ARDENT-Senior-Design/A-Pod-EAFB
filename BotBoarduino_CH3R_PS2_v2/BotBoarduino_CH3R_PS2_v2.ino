@@ -30,8 +30,8 @@
 #include <pins_arduino.h>
 #include <SoftwareSerial.h>        
 #include "Hex_globals.h"
-#include <Pixy.h>
-#include <SPI.h>  
+#include <PixyI2C.h>
+#include <Wire.h>  
 #include "PixyCamera.h"
 #define BalanceDivFactor 6    //;Other values than 6 can be used, testing...CAUTION!! At your own risk ;)
 
@@ -273,7 +273,7 @@ long            GaitRotY[6];         //Array containing Relative Y rotation corr
 boolean         fWalking;            //  True if the robot are walking
 boolean         fContinueWalking;    // should we continue to walk?
 
-Pixy pixy;
+PixyI2C pixy;
 
 //=============================================================================
 // Function prototypes
@@ -294,7 +294,7 @@ extern void LegIK (short IKFeetPosX, short IKFeetPosY, short IKFeetPosZ, byte Le
 extern void Gait (byte GaitCurrentLegNr);
 extern short GetATan2 (short AtanX, short AtanY);
 
-extern Pixy UpdateCamera(Pixy pixy);
+extern PixyI2C UpdateCamera(PixyI2C pixy);
 
 //--------------------------------------------------------------------------
 // SETUP: the main arduino setup function.
@@ -306,8 +306,8 @@ void setup(){
     g_fShowDebugPrompt = true;
     g_fDebugOutput = false;
 #ifdef DBGSerial    
-    DBGSerial.begin(57600);
-   // DBGSerial.begin(38400);
+   // DBGSerial.begin(57600);
+    DBGSerial.begin(38400);
 #endif
     // Init our ServoDriver
     g_ServoDriver.Init();
@@ -319,7 +319,6 @@ void setup(){
    //Checks to see if our Servo Driver support a GP Player
 //    DBGSerial.write("Program Start\n\r");
     // debug stuff
-    delay(10);
 
 
     //Turning off all the leds
@@ -367,6 +366,8 @@ void setup(){
     ServoMoveTime = 150;
     g_InControlState.fHexOn = 0;
     g_fLowVoltageShutdown = false;
+    
+    pixy.init();
 }
 
     
@@ -377,24 +378,25 @@ void setup(){
 
 void loop(void)
 {
+  
     //Start time
     lTimerStart = millis(); 
     //Read input
     CheckVoltage();        // check our voltages...
     if (!g_fLowVoltageShutdown)
         g_InputController.ControlInput();
-    pixy.init();
     WriteOutputs();        // Write Outputs
-    
-
+//    delay(10);
+    //pixy=UpdateCamera(pixy);
+//    delay(10);
 #ifdef OPT_GPPLAYER
     //GP Player
     g_ServoDriver.GPPlayer();
 #endif
-
+  
     //Single leg control
     SingleLegControl ();
-            
+           
     //Gait
     GaitSeq();
              

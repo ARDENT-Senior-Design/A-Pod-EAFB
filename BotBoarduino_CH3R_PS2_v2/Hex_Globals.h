@@ -114,7 +114,7 @@ extern const byte cTarsLength[] PROGMEM;
 #ifdef __AVR__
 #if not defined(UBRR1H)
 //extern NewSoftSerial SSCSerial;
-extern SoftwareSerial SSCSerial;
+extern SoftwareSerial  SSCSerial;
 #endif
 #endif
 #endif

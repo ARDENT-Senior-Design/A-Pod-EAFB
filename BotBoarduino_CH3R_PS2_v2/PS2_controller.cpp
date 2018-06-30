@@ -150,6 +150,7 @@ void InputController::AllowControllerInterrupts(boolean fAllow)
 //==============================================================================
 void InputController::ControlInput(void)
 {
+  
     // Then try to receive a packet of information from the PS2.
     // Then try to receive a packet of information from the PS2.
     ps2x.read_gamepad();          //read controller and set large motor to spin at 'vibrate' speed
@@ -160,6 +161,7 @@ void InputController::ControlInput(void)
         g_sPS2ErrorCnt = 0;    // clear out error count...
         
         if (ps2x.ButtonPressed(PSB_START)) {// OK lets try "0" button for Start. 
+          Serial.println("Start");
             if (g_InControlState.fHexOn) {
                 PS2TurnRobotOff();
             } else {
