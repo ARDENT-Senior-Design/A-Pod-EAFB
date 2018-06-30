@@ -301,9 +301,9 @@ extern PixyI2C UpdateCamera(PixyI2C pixy);
 //Claw Sensor
 //=============================================================================
 
-//NewPing sonar(8,7,200);
+NewPing sonar(2,3,200);
 
-//--------------------------------------------------------------------------
+//----------------------------------  ----------------------------------------
 // SETUP: the main arduino setup function.
 //--------------------------------------------------------------------------
 void setup(){
@@ -376,7 +376,7 @@ void setup(){
     
     pixy.init();
     
-    //Serial.begin(9600);
+    Serial.begin(38400);
 }
 
     
@@ -564,13 +564,13 @@ void loop(void)
 //Claw Sensor
 //=============================================================================
 
-//Serial.print ("Distance: ");
-//  Serial.println(sonar.ping_cm());
+Serial1.print ("Distance: ");
+  Serial.println(sonar.ping_cm());
 //  
 // if (sonar.ping_cm()<10) {
-//  DBGSerial.println("#28 P1500 #29 P1500 T2500");
+//  DBGSerial.println("#28 P1500 #29 P600 T2500");
 //  } else if (sonar.ping_cm() >10) {
-//    DBGSerial.println("#28 P600 #29 P600 T2500");
+//    DBGSerial.println("#28 P600 #29 P1500 T2500");
 //}
         
 }
