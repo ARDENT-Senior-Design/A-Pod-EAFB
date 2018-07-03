@@ -148,6 +148,8 @@ boolean g_fDebugOutput = true;
 short           CoxaAngle1[6];    //Actual Angle of the horizontal hip, decimals = 1
 short           FemurAngle1[6];   //Actual Angle of the vertical hip, decimals = 1
 short           TibiaAngle1[6];   //Actual Angle of the knee, decimals = 1
+short           neckAngle;        //Actual Angle
+boolean            clawOpen;
 #ifdef c4DOF
 short           TarsAngle1[6];	  //Actual Angle of the knee, decimals = 1
 #endif
@@ -275,7 +277,8 @@ boolean         fWalking;            //  True if the robot are walking
 boolean         fContinueWalking;    // should we continue to walk?
 
 PixyI2C pixy;
-
+int xError;
+int pingDistance; 
 //=============================================================================
 // Function prototypes
 //=============================================================================
@@ -295,7 +298,7 @@ extern void LegIK (short IKFeetPosX, short IKFeetPosY, short IKFeetPosZ, byte Le
 extern void Gait (byte GaitCurrentLegNr);
 extern short GetATan2 (short AtanX, short AtanY);
 
-extern PixyI2C UpdateCamera(PixyI2C pixy);
+extern int UpdateCamera(PixyI2C pixy);
 
 //=============================================================================
 //Claw Sensor
@@ -396,7 +399,8 @@ void loop(void)
         g_InputController.ControlInput();
     WriteOutputs();        // Write Outputs
 //    delay(10);
-    pixy=UpdateCamera(pixy);
+    xError=UpdateCamera(pixy);
+    pingDistance = sonar.ping_cm();
 //    delay(10);
 #ifdef OPT_GPPLAYER
     //GP Player
@@ -552,6 +556,7 @@ void loop(void)
 
     // Xan said Needed to be here...
     g_ServoDriver.CommitServoDriver(ServoMoveTime);
+    g_ServoDriver.OutputAPodInfo(clawOpen);
     PrevServoMoveTime = ServoMoveTime;
 
     //Store previous g_InControlState.fHexOn State
@@ -564,14 +569,17 @@ void loop(void)
 //Claw Sensor
 //=============================================================================
 
-Serial1.print ("Distance: ");
-  Serial.println(sonar.ping_cm());
+      neckAngle =2000;
+//Serial1.print ("Distance: ");
+  //Serial.println(sonar.ping_cm());
 //  
-// if (sonar.ping_cm()<10) {
+ if (pingDistance<10 && pingDistance != 0) {
 //  DBGSerial.println("#28 P1500 #29 P600 T2500");
-//  } else if (sonar.ping_cm() >10) {
+    clawOpen = false;
+  } else {
 //    DBGSerial.println("#28 P600 #29 P1500 T2500");
-//}
+    clawOpen = true;
+  }
         
 }
 

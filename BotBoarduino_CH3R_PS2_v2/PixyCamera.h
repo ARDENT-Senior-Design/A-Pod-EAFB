@@ -8,7 +8,7 @@
 
 int32_t panError, tiltError;
 
-PixyI2C UpdateCamera(PixyI2C pixy)
+int UpdateCamera(PixyI2C pixy)
 {
   static int i = 0;
   int j;
@@ -54,13 +54,14 @@ PixyI2C UpdateCamera(PixyI2C pixy)
         Serial.println(panError);
         Serial.print("Vertical Error: ");
         Serial.println(tiltError);
+        return panError;
       }
       else
       {
         largestArea = 0;
+        return 0;  //returns the update pixy camera image pixel
       }
     }
   }  
-  return pixy;  //returns the update pixy camera image pixel
 }
 

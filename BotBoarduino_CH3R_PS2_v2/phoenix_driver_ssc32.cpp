@@ -179,6 +179,7 @@ void ServoDriver::OutputServoInfoForLeg(byte LegIndex, short sCoxaAngle1, short 
     word    wCoxaSSCV;        // Coxa value in SSC units
     word    wFemurSSCV;        //
     word    wTibiaSSCV;        //
+    word    wJawSSCV;         //Jaw Value
 #ifdef c4DOF
     word    wTarsSSCV;        //
 #endif
@@ -200,7 +201,8 @@ void ServoDriver::OutputServoInfoForLeg(byte LegIndex, short sCoxaAngle1, short 
         wTarsSSCV = ((long)(sTarsAngle1+900))*1000/cPwmDiv+cPFConst;
 #endif
     }
-
+    
+    
 #ifdef cSSC_BINARYMODE
     SSCSerial.write(pgm_read_byte(&cCoxaPin[LegIndex])  + 0x80);
     SSCSerial.write(wCoxaSSCV >> 8);
@@ -236,14 +238,6 @@ void ServoDriver::OutputServoInfoForLeg(byte LegIndex, short sCoxaAngle1, short 
     //12 yaw of head
     //13 is roll
     
-    SSCSerial.println("#13 P1500 T600"); //tail
-    SSCSerial.println("#14 P1500 T600");
-//   SSCSerial.print("#");
-//    SSCSerial.print(pgm_read_byte(&cTibiaPin[LegIndex]), DEC);
-//    SSCSerial.print("P");
-//    SSCSerial.print(wTibiaSSCV, DEC);
-    /////////////////////////////////////////tail
-    SSCSerial.println("#31 P1800 T600"); //tail
 #ifdef c4DOF
     if ((byte)pgm_read_byte(&cTarsLength[LegIndex])) {
         SSCSerial.print("#");
@@ -256,7 +250,27 @@ void ServoDriver::OutputServoInfoForLeg(byte LegIndex, short sCoxaAngle1, short 
     g_InputController.AllowControllerInterrupts(true);    // Ok for hserial again...
 }
 
-
+void ServoDriver::OutputAPodInfo(boolean clawOpen)
+{
+    SSCSerial.print("#13 P1500"); //tail
+    SSCSerial.print("#14 P1500");
+    SSCSerial.print("#12 P1500");
+    if(clawOpen)
+    {
+      SSCSerial.print("#28 P1500");
+      SSCSerial.print("#29 P1750");
+    }
+    else{
+      SSCSerial.print("#28 P1750");
+      SSCSerial.print("#29 P1500");
+    }
+//   SSCSerial.print("#");
+//    SSCSerial.print(pgm_read_byte(&cTibiaPin[LegIndex]), DEC);
+//    SSCSerial.print("P");
+//    SSCSerial.print(wTibiaSSCV, DEC);
+    /////////////////////////////////////////tail
+    SSCSerial.println("#31 P1800 T150"); //tail
+}
 //--------------------------------------------------------------------
 //[CommitServoDriver Updates the positions of the servos - This outputs
 //         as much of the command as we can without committing it.  This

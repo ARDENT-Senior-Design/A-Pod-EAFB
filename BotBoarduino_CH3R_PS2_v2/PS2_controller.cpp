@@ -220,15 +220,15 @@ void InputController::ControlInput(void)
 
 #ifdef OPT_GPPLAYER
             // GP Player Mode X
-            if (ps2x.ButtonPressed(PSB_CROSS)) { // X - Cross Button Test
-                MSound(SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
-                if (ControlMode != GPPLAYERMODE) {
-                    ControlMode = GPPLAYERMODE;
-                    Serial.println("GP Player Mode");
-                    GPSeq=0;
-                } else
-                    ControlMode = WALKMODE;
-            }
+            // if (ps2x.ButtonPressed(PSB_CROSS)) { // X - Cross Button Test
+            //     MSound(SOUND_PIN, 1, 50, 2000);  //sound SOUND_PIN, [50\4000]
+            //     if (ControlMode != GPPLAYERMODE) {
+            //         ControlMode = GPPLAYERMODE;
+            //         Serial.println("GP Player Mode");
+            //         GPSeq=0;
+            //     } else
+            //         ControlMode = WALKMODE;
+            // }
 #endif // OPT_GPPLAYER
 
             //[Common functions]
@@ -335,6 +335,16 @@ void InputController::ControlInput(void)
                 
             }
 
+            //[Follow Ball Function]
+            if(ps2x.ButtonPressed(PSB_CROSS))
+            { 
+                if(ps2x.Analog(PSS_RX)-128>0){
+                g_InControlState.TravelLength.y = ps2x.Analog(PSS_RX) < 200 ? -(ps2x.Analog(PSS_RX) - 128)/4 : -(200 - 128)/4  ; //Right Stick Left/Right 
+                }
+                else{
+                  g_InControlState.TravelLength.y = ps2x.Analog(PSS_RX) > 50 ? -(ps2x.Analog(PSS_RX) - 128)/4 : -(50 - 128)/4  ;
+                }
+            }
             //[Translate functions]
             g_BodyYShift = 0;
             if (ControlMode == TRANSLATEMODE) {
