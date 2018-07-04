@@ -80,6 +80,7 @@
 #define ROTATEMODE        2
 #define SINGLELEGMODE     3
 #define GPPLAYERMODE      4
+#define AUTON             5
 
 
 #define cTravelDeadZone 4      //The deadzone for the analog input from the remote
@@ -148,7 +149,7 @@ void InputController::AllowControllerInterrupts(boolean fAllow)
 // This is The main code to input function to read inputs from the PS2 and then
 //process any commands.
 //==============================================================================
-void InputController::ControlInput(void)
+void InputController::ControlInput(int xError)
 {
   
     // Then try to receive a packet of information from the PS2.
@@ -275,6 +276,7 @@ void InputController::ControlInput(void)
             //[Walk functions]
             if (ControlMode == WALKMODE) {
                 //Switch gates
+                Serial.println("We in walk mode boiiissss");
                 if (ps2x.ButtonPressed(PSB_SELECT)            // Select Button Test
                         && abs(g_InControlState.TravelLength.x)<cTravelDeadZone //No movement
                         && abs(g_InControlState.TravelLength.z)<cTravelDeadZone 
@@ -336,15 +338,35 @@ void InputController::ControlInput(void)
             }
 
             //[Follow Ball Function]
+            
             if(ps2x.ButtonPressed(PSB_CROSS))
             { 
-                if(ps2x.Analog(PSS_RX)-128>0){
-                g_InControlState.TravelLength.y = ps2x.Analog(PSS_RX) < 200 ? -(ps2x.Analog(PSS_RX) - 128)/4 : -(200 - 128)/4  ; //Right Stick Left/Right 
+              Serial.println("Autonomous Mode");
+              if(ControlMode != AUTON){
+              ControlMode = AUTON;
+              }
+              else{
+                ControlMode = WALKMODE;
+              }
+            }
+
+            if(ControlMode == AUTON)
+            {
+              if(xError>15 && xError < 300){
+                    Serial.println("I see something to the right");
+                g_InControlState.TravelLength.y = abs(xError) < 200 ? -(xError - 128)/4 :  -(200 - 128)/4  ; //Right Stick Left/Right 
                 }
-                else{
-                  g_InControlState.TravelLength.y = ps2x.Analog(PSS_RX) > 50 ? -(ps2x.Analog(PSS_RX) - 128)/4 : -(50 - 128)/4  ;
+                else if(xError < -15 && xError > -300){
+                    Serial.println("I See something to the left");
+                  g_InControlState.TravelLength.y = abs(xError) > 50 ? -(xError - 128)/4 :  -(50 - 128)/4  ;
+                }
+                else
+                {
+                  g_InControlState.TravelLength.y = 0;
                 }
             }
+
+            
             //[Translate functions]
             g_BodyYShift = 0;
             if (ControlMode == TRANSLATEMODE) {

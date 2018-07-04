@@ -10,7 +10,7 @@
 #include <Wprogram.h> // Arduino 0022
 #endif
 #include "Hex_Globals.h"
-#include "ServoDriver.h"
+//#include "ServoDriver.h"
 #ifdef c4DOF
 #define NUMSERVOSPERLEG 4
 #else

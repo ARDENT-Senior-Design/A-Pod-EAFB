@@ -19,13 +19,13 @@ int UpdateCamera(PixyI2C pixy)
   
   // grab blocks!
   blocks = pixy.getBlocks();
-  Serial.println(pixy.getBlocks());
+  //Serial.println(pixy.getBlocks());
   // If there are detect blocks, print them!
   if(blocks)
   {
     i++;
     
-    Serial.println("This running");
+    
     // do this (print) every 50 frames because printing every
     // frame would bog down the Arduino
     if (i%5==0)
@@ -34,7 +34,7 @@ int UpdateCamera(PixyI2C pixy)
       {
         if(largestArea<pixy.blocks[j].width*pixy.blocks[j].height && pixy.blocks[j].width*pixy.blocks[j].height > 150)
         {
-          Serial.println("This is running");
+         
           sprintf(buf, "Detected %d:\n", blocks);
           Serial.print(buf);
           largestArea=pixy.blocks[j].width*pixy.blocks[j].height;
@@ -43,7 +43,6 @@ int UpdateCamera(PixyI2C pixy)
       }
       if(largestArea!=0)
       {
-        Serial.println("This is also running");
         sprintf(buf, "  block %d: ", j);
         Serial.print(buf); 
         pixy.blocks[largestAreaPos].print();

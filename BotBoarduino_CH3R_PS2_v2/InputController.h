@@ -20,7 +20,7 @@
 class InputController {
   public:
     void     Init(void);
-    void     ControlInput(void);
+    void     ControlInput(int cameraError);
     void     AllowControllerInterrupts(boolean fAllow);
 
   private:

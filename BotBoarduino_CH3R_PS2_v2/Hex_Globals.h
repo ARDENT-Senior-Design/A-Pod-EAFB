@@ -7,6 +7,8 @@
 #define _HEX_GLOBALS_H_
 #include <stdarg.h>
 #include <SoftwareSerial.h>        // Beta 11 newsoftware serial...
+
+#include <PixyI2C.h>
 #include "Hex_Cfg.h"
 #include "ServoDriver.h"
 #include "InputController.h"
@@ -35,6 +37,8 @@
 
 
 #define NUM_GAITS    5
+ 
+
 extern void GaitSelect(void);
 extern short SmoothControl (short CtrlMoveInp, short CtrlMoveOut, byte CtrlDivider);
 

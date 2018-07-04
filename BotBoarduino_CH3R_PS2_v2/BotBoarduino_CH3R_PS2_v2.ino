@@ -26,12 +26,12 @@
 #include <Arduino.h>
 #else
 #endif
+  
+#include "Hex_Globals.h"
 #include <NewPing.h>
 #include <PS2X_lib.h>
 #include <pins_arduino.h>
-#include <SoftwareSerial.h>        
-#include "Hex_globals.h"
-#include <PixyI2C.h>
+#include <SoftwareSerial.h>      
 #include <Wire.h>  
 #include "PixyCamera.h"
 #define BalanceDivFactor 6    //;Other values than 6 can be used, testing...CAUTION!! At your own risk ;)
@@ -276,9 +276,7 @@ long            GaitRotY[6];         //Array containing Relative Y rotation corr
 boolean         fWalking;            //  True if the robot are walking
 boolean         fContinueWalking;    // should we continue to walk?
 
-PixyI2C pixy;
-int xError;
-int pingDistance; 
+
 //=============================================================================
 // Function prototypes
 //=============================================================================
@@ -298,8 +296,10 @@ extern void LegIK (short IKFeetPosX, short IKFeetPosY, short IKFeetPosZ, byte Le
 extern void Gait (byte GaitCurrentLegNr);
 extern short GetATan2 (short AtanX, short AtanY);
 
-extern int UpdateCamera(PixyI2C pixy);
-
+int UpdateCamera(PixyI2C pixy);
+PixyI2C pixy;
+int xError;
+int pingDistance;
 //=============================================================================
 //Claw Sensor
 //=============================================================================
@@ -378,7 +378,7 @@ void setup(){
     g_fLowVoltageShutdown = false;
     
     pixy.init();
-    
+    xError = 0;
     Serial.begin(38400);
 }
 
@@ -396,7 +396,7 @@ void loop(void)
     //Read input
     CheckVoltage();        // check our voltages...
     if (!g_fLowVoltageShutdown)
-        g_InputController.ControlInput();
+        g_InputController.ControlInput(xError);
     WriteOutputs();        // Write Outputs
 //    delay(10);
     xError=UpdateCamera(pixy);
