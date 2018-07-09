@@ -139,6 +139,12 @@ const short cInitPosZ[] PROGMEM = {cRRInitPosZ, cRMInitPosZ, cRFInitPosZ, cLRIni
 boolean g_fShowDebugPrompt;
 boolean g_fDebugOutput = true;
 
+//Timer for claw
+const unsigned long closePeriod = 5000;
+const unsigned long resetPeriod = 10000;
+unsigned long currentMillis;
+unsigned long previousMillis;
+
 
 //--------------------------------------------------------------------
 //[REMOTE]                 
@@ -381,6 +387,10 @@ void setup(){
     xError = 0;
     Serial.begin(38400);
     Serial.println("Beginning Proggram");
+
+    // Claw Timer
+    currentMillis = millis();
+    previousMillis = currentMillis;
 }
 
     
@@ -572,19 +582,23 @@ void loop(void)
 //=============================================================================
 
       neckAngle =2000;
-//Serial1.print ("Distance: ");
-  //Serial.println(sonar.ping_cm());
-//  
- if (pingDistance<10 && pingDistance != 0) {
-//  DBGSerial.println("#28 P1500 #29 P600 T2500");
-    clawOpen = false;
-  } else {
-//    DBGSerial.println("#28 P600 #29 P1500 T2500");
-    clawOpen = true;
+  
+  if (abs(currentMillis - previousMillis) < resetPeriod)
+  { 
+    if (abs(currentMillis - previousMillis) < closePeriod && pingDistance<10 && pingDistance != 0) 
+    {
+      clawOpen = false;
+      currentMillis = millis();
+    } 
+    else{
+      clawOpen = true;  
+      currentMillis = millis();
+    }       
   }
-        
+  else{
+    previousMillis = currentMillis;
+  }
 }
-
 
 void StartUpdateServos()
 {        
