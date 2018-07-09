@@ -380,6 +380,7 @@ void setup(){
     pixy.init();
     xError = 0;
     Serial.begin(38400);
+    Serial.println("Beginning Proggram");
 }
 
     
@@ -390,7 +391,8 @@ void setup(){
 
 void loop(void)
 {
-  
+
+  Serial.println("running");
     //Start time
     lTimerStart = millis(); 
     //Read input

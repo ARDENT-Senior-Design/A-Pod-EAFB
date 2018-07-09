@@ -19,7 +19,7 @@ int UpdateCamera(PixyI2C pixy)
   
   // grab blocks!
   blocks = pixy.getBlocks();
-  //Serial.println(pixy.getBlocks());
+  Serial.println(pixy.getBlocks());
   // If there are detect blocks, print them!
   if(blocks)
   {

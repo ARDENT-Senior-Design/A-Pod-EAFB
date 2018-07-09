@@ -352,13 +352,13 @@ void InputController::ControlInput(int xError)
 
             if(ControlMode == AUTON)
             {
-              if(xError>15 && xError < 300){
+              if(xError>25 && xError < 300){
                     Serial.println("I see something to the right");
-                g_InControlState.TravelLength.y = abs(xError) < 200 ? -(xError - 128)/4 :  -(200 - 128)/4  ; //Right Stick Left/Right 
+                  g_InControlState.TravelLength.y = abs(xError) < 200 ? -(xError - 128)/4 :  -(175 - 128)/4  ; //Right Stick Left/Right 
                 }
-                else if(xError < -15 && xError > -300){
+                else if(xError < -25 && xError > -300){
                     Serial.println("I See something to the left");
-                  g_InControlState.TravelLength.y = abs(xError) > 50 ? -(xError - 128)/4 :  -(50 - 128)/4  ;
+                  g_InControlState.TravelLength.y = abs(xError) < 50 ? -(xError - 128)/4 :  -(75 - 128)/4  ;
                 }
                 else
                 {
