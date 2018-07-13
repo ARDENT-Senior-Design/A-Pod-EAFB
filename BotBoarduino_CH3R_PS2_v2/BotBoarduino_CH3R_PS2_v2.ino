@@ -141,7 +141,7 @@ boolean g_fDebugOutput = true;
 
 //Timer for claw
 const unsigned long closePeriod = 5000;
-const unsigned long resetPeriod = 10000;
+const unsigned long resetPeriod = 7000;
 unsigned long currentMillis;
 unsigned long previousMillis;
 
