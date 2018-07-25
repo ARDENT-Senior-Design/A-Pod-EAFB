@@ -7,7 +7,7 @@
 //Date: 29-10-2009
 //Programmer: Jeroen Janssen [aka Xan]
 //         Kurt Eckhardt(KurtE) converted to C and Arduino
-//
+// Modified by: Nathan Boyd
 // This version of the Phoenix code was ported over to the Arduino Environement
 // and is specifically configured for the Lynxmotion BotBoarduino 
 //
