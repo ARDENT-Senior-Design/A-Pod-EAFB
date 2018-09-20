@@ -28,7 +28,6 @@
 
 //uncomment the following line to activate 4 DoF
 //#define c4DOF
-
 //comment if terminal monitor is not required
 #define OPT_TERMINAL_MONITOR  
 
@@ -291,4 +290,3 @@
 #define cTarsFactorA	70	//4DOF ONLY
 #define cTarsFactorB	60	//4DOF ONLY
 #define cTarsFactorC	50	//4DOF ONLY
-
