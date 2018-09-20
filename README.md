@@ -38,3 +38,6 @@ Where the <playstation button> is one of the definitions for the playstation but
   
 3. Replace the controller. Purchase a new transmitter and controller from the Lynxmotion website (http://www.lynxmotion.com/p-1096-ps2-robot-controller-v4.aspx). Since the hardware is cheap, breakage is fairly common.
 
+## Additional
+
+These were the main issues that appeared during the project. IF you are still confused, please search the RobotShop forums for "Phoenix hexapod." Additional documentation for the A-Pod, which is build based on the Phoenix Frame, is also under the hexapod forums on RobotShop.
